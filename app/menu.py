@@ -1,6 +1,33 @@
 from app.api import consultar_indicador
 from app.models import Indicador
-from app.repository import guardar_indicador
+from app.repository import guardar_indicador, obtener_historial
+
+def menu_principal(usuario):
+    while True:
+        print("\n=== MENÚ PRINCIPAL ===")
+        print("1. Ver cambio de moneda en tiempo real")
+        print("2. Ver historial de consultas")
+        print("3. Salir")
+
+        op = input("Opción: ").strip()
+
+        if op == "1":
+            menu_monedas(usuario)
+
+        elif op == "2":
+            historial = obtener_historial(usuario)
+            if not historial:
+                print("\nNo hay registros aún.")
+            else:
+                print("\n=== HISTORIAL ===")
+                for h in historial:
+                    print(f"{h[0]} | {h[1]} | {h[2]} | {h[3]} | {h[4]}")
+
+        elif op == "3":
+            break
+
+        else:
+            print("Opción inválida")
 
 def menu_monedas(usuario):
     mapa = {
@@ -13,14 +40,14 @@ def menu_monedas(usuario):
     }
 
     while True:
-        print("\n=== CAMBIO DE MONEDA EN TIEMPO REAL ===")
+        print("\n=== CAMBIO DE MONEDA ===")
         print("1. Dólar")
         print("2. Euro")
         print("3. UF")
         print("4. UTM")
         print("5. IPC")
         print("6. IVP")
-        print("7. Salir")
+        print("7. Volver")
 
         op = input("Opción: ").strip()
 
